@@ -123,7 +123,7 @@ export class MainScene extends Phaser.Scene {
       const face = this.add.circle(Math.cos(ang) * 220, Math.sin(ang) * 220, 35, color, 1);
       const eyeL = this.add.circle(face.x - 12, face.y - 6, 4, 0x1d1d1d);
       const eyeR = this.add.circle(face.x + 12, face.y - 6, 4, 0x1d1d1d);
-      const smile = this.add.arc(face.x, face.y + 7, 16, 10, 170, false, 0x1d1d1d).setLineWidth(3,3);
+      const smile = this.add.arc(face.x, face.y + 7, 16, 10, 170, false, 0x1d1d1d).setStrokeStyle(3, 0x1d1d1d, 1);
       this.spokesContainer.add([face, eyeL, eyeR, smile]);
     }
     this.wheelContainer.add(this.spokesContainer);
@@ -216,7 +216,10 @@ export class MainScene extends Phaser.Scene {
   }
 
   private jump(): void {
-    const onGround = Math.abs(this.player.body.velocity.y) < 0.1 && this.player.y >= this.playerPosition.y - 2;
+    const body = this.player.body as Phaser.Physics.Arcade.Body | null;
+    const onGround = body !== null
+      && Math.abs(body.velocity.y) < 0.1
+      && this.player.y >= this.playerPosition.y - 2;
     if (onGround) this.player.setVelocityY(-820);
   }
 
@@ -252,7 +255,8 @@ export class MainScene extends Phaser.Scene {
   private animateWater(time: number): void {
     this.children.list.forEach((obj) => {
       if (obj.getData && obj.getData('water')) {
-        obj.y += Math.sin((time / 300) + obj.x / 140) * 0.1;
+        const transformObj = obj as Phaser.GameObjects.GameObject & Phaser.GameObjects.Components.Transform;
+        transformObj.y += Math.sin((time / 300) + transformObj.x / 140) * 0.1;
       }
     });
   }
