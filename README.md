@@ -21,9 +21,13 @@ Jogo browser casual construído com **Phaser.js + Vite + TypeScript**.
 
 ```text
 .
+├── .github
+│   └── workflows
+│       └── deploy.yml
 ├── index.html
 ├── package.json
 ├── tsconfig.json
+├── vite.config.ts
 ├── src
 │   ├── main.ts
 │   ├── scenes
@@ -33,7 +37,7 @@ Jogo browser casual construído com **Phaser.js + Vite + TypeScript**.
 └── README.md
 ```
 
-## Como correr
+## Como correr localmente
 
 ```bash
 npm install
@@ -42,12 +46,28 @@ npm run dev
 
 Depois abrir o URL indicado pelo Vite (normalmente `http://localhost:5173`).
 
-## Comandos úteis
+## Scripts disponíveis
 
 ```bash
+npm run dev
 npm run build
 npm run preview
 ```
+
+## Deploy no GitHub Pages (sem instalar nada para jogar)
+
+O projeto está preparado para publicar automaticamente no GitHub Pages com GitHub Actions:
+
+- `vite.config.ts` usa `base: "/nos-summer-wheel/"`.
+- O workflow em `.github/workflows/deploy.yml` faz `npm install`, `npm run build` e publica `dist`.
+
+### Passo a passo para ativar
+
+1. Faz push para o branch `main` no repositório GitHub.
+2. No GitHub, abre **Settings > Pages**.
+3. Em **Source**, seleciona **GitHub Actions**.
+4. Vai ao separador **Actions** e confirma que o workflow **Deploy to GitHub Pages** correu com sucesso.
+5. Após o deploy, abre o URL publicado (normalmente `https://<teu-utilizador>.github.io/nos-summer-wheel/`).
 
 ## Controlo
 
